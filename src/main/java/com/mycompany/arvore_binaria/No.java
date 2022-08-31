@@ -4,8 +4,8 @@
  * and open the template in the editor.
  */
 package com.mycompany.arvore_binaria;
+
 /**
- *
  * @author vinyj
  */
 public class No {
@@ -14,42 +14,41 @@ public class No {
     private No filhoEsq;
     private No filhoDir;
     private int nivel;
-    
+
     //Construtor do nó
-    public No(int valor){
+    public No(int valor) {
         this.valor = valor;
         this.filhoEsq = null;
         this.filhoDir = null;
-        this.nivel = nivel;
     }
-    
+
     //Método de adição do filho esquerdo do nó
-    public void adicionarFilhoEsqAoNo(No no){
+    public void adicionarFilhoEsqAoNo(No no) {
         no.nivel = this.nivel + 1;
         this.filhoEsq = no;
     }
-    
+
     //Método de adição do filho direito do nó
-    public void adicionarFilhoDirAoNo(No no){
+    public void adicionarFilhoDirAoNo(No no) {
         no.nivel = this.nivel + 1;
         this.filhoDir = no;
     }
-    
+
     //Método que retorna o valor do nó
     public int getValorNo() {
         return valor;
     }
-    
+
     //Método que retorna o filho esquerdo do nó
     public No getFilhoEsqNo() {
         return filhoEsq;
     }
-    
+
     //Método que retorna o filho direito do nó
     public No getFilhoDirNo() {
         return filhoDir;
     }
-    
+
     //Método que retorna o nível do nó
     public int getNivelNo() {
         return nivel;
