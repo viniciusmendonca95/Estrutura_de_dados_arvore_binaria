@@ -97,6 +97,22 @@ public class Arvore {
         }
         System.out.println();
     }
+    
+    //Método que retorna o grau da árvore
+    public int getGrauArvore() {
+        elementos.clear();
+        elementos = geraElementos(noRaiz);
+        
+        int maiorGrau = 0;
+        
+        for (No elemento : elementos) {
+            if (elemento.getGrau() > maiorGrau) {
+                maiorGrau = elemento.getGrau();
+            }
+        }
+        
+        return maiorGrau;
+    }
 
     //Método que retorna a altura da árvore
     public void getAlturaArvore() {

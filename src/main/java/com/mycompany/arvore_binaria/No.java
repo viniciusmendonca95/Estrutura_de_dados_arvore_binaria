@@ -53,4 +53,15 @@ public class No {
     public int getNivelNo() {
         return nivel;
     }
+    
+    //Método que retorna o grau do nó
+    public int getGrau() {
+        if (filhoEsq == null && filhoDir == null) {
+            return 0;
+        } else if (filhoEsq != null && filhoDir != null) {
+            return 2;
+        } else {
+            return 1;
+        } 
+    }
 }
