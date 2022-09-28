@@ -38,20 +38,40 @@ public class No {
     public int getValorNo() {
         return valor;
     }
+    
+    //Método que seta o valor do no
+    public void setValorNo(int valor) {
+        this.valor = valor;
+    }
 
     //Método que retorna o filho esquerdo do nó
     public No getFilhoEsqNo() {
         return filhoEsq;
+    }
+    
+    //Método que seta o filho esquerdo do nó
+    public void setFilhoEsqNo(No filhoEsq) {
+        this.filhoEsq = filhoEsq;
     }
 
     //Método que retorna o filho direito do nó
     public No getFilhoDirNo() {
         return filhoDir;
     }
+    
+    //Método que seta o filho direito do nó
+    public void setFilhoDirNo(No filhoDir) {
+        this.filhoDir = filhoDir;
+    }
 
     //Método que retorna o nível do nó
     public int getNivelNo() {
         return nivel;
+    }
+    
+    //Método que seta o nivel  do nó
+    public void setNivelNo(int nivel) {
+        this.nivel = nivel;
     }
     
     //Método que retorna o grau do nó
@@ -63,5 +83,33 @@ public class No {
         } else {
             return 1;
         } 
+    }
+    
+    //
+    public No sucessor(No no)
+    {
+        No sucessor = no;
+        
+        sucessor = sucessor.getFilhoDirNo();
+        
+        while(sucessor.getFilhoEsqNo() != null)
+            sucessor = sucessor.getFilhoEsqNo();
+        
+        return sucessor;
+    }
+    
+    //
+    public No antecessor(No no)
+    {
+        No antecessor = no;
+        
+        antecessor = antecessor.getFilhoEsqNo();
+        
+        while(antecessor.getFilhoDirNo() != null)
+        {
+            antecessor = antecessor.getFilhoDirNo();
+        }
+        
+        return antecessor;
     }
 }

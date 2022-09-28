@@ -17,14 +17,19 @@ public class Arvore {
     private List<No> elementos;
 
     //Construtor da árvore binária
-    public Arvore(No no) {
-        this.noRaiz = no;
+    public Arvore() {
+        this.setNoRaiz(null);
         this.elementos = new ArrayList<>();
     }
 
     //Método que retorna o nó raiz da árvore
     public No getNoRaiz() {
         return noRaiz;
+    }
+    
+    //Método que seta o nó raiz da árvore
+    public void setNoRaiz(No noRaiz) {
+        this.noRaiz = noRaiz;
     }
 
     //Método que gera e retorna a lista de elementos da árvore
@@ -172,6 +177,44 @@ public class Arvore {
             System.out.println("Nó " + elemento.getValorNo() + " tem profundidade " + elemento.getNivelNo());
         }
     }
+    
+    //Método para inserir nó na árvore
+    public void inserirNoNaArvore(No no, int valor) {
+        if (no.getValorNo() == valor) {
+            System.out.println("O no com esse valor ja existe na arvore");
+        } else if (no == null) {
+            no.setValorNo(valor);
+        } else {
+            if (valor < no.getValorNo()) {
+                if (no.getFilhoEsqNo() == null) {
+                    No novo = new No(valor);
+                    no.setFilhoEsqNo(novo);
+                    novo.setNivelNo(no.getNivelNo() + 1);
+                } else {
+                    inserirNoNaArvore(no.getFilhoEsqNo(), valor);
+                }
+            } else {
+                if (no.getFilhoDirNo() == null) {
+                    No novo = new No(valor);
+                    no.setFilhoDirNo(novo);
+                    novo.setNivelNo(no.getNivelNo() + 1);
+                } else {
+                    inserirNoNaArvore(no.getFilhoDirNo(), valor);
+                }
+            }
+
+        }
+    }
+    
+    //Método para inserir nó raiz na árvore
+    public void inserirNoNaArvore(int valor) {
+        if (this.getNoRaiz() == null) {
+            this.noRaiz = new No(valor);
+        } else {
+            inserirNoNaArvore(this.noRaiz, valor);
+        }
+    }
+    
 
     //Método que printa a árvore de forma identada    
     public void printArvore(No no) {
