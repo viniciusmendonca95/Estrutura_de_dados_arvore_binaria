@@ -215,6 +215,98 @@ public class Arvore {
         }
     }
     
+    //Método para remover no da árvore
+    public void removerNoArvore(No no, No pai, int valor) {
+        //se o no em questao nao possui o valor a ser removido
+        if (no.getValorNo() != valor) {
+            if (valor < no.getValorNo()) {
+                if (no.getFilhoEsqNo() != null) {
+                    removerNoArvore(no.getFilhoEsqNo(), no, valor);
+                } else {
+                    System.out.println("O valor " + valor + " nao esta na arvore");
+                }
+            } else {
+                if (no.getFilhoDirNo() != null) {
+                    removerNoArvore(no.getFilhoDirNo(), no, valor);
+                } else {
+                    System.out.println("O valor " + valor + " nao esta na arvore");
+                }
+            }
+
+        }
+        //se o no em questao possui o valor a ser removido      
+        else {
+            No aux;
+            //caso de remocao de folha
+            if (no.getFilhoDirNo() == null && no.getFilhoEsqNo() == null) {
+                
+                // se o no a ser removido for filho direito do pai
+                if(pai.getFilhoDirNo() == no)
+                {
+                    pai.setFilhoDirNo(null);
+                }
+                else
+                {
+                    pai.setFilhoEsqNo(null);
+                }
+            }
+            //caso onde o no possui 1 filho
+            else if (no.getFilhoDirNo() == null || no.getFilhoEsqNo() == null) {
+                
+                //se nao há subarvore à direita, pegue o antecessor
+                if (no.getFilhoEsqNo() != null) {
+                    if(no == this.noRaiz)
+                    {
+                        this.noRaiz = no.getFilhoEsqNo();
+                    }
+                    else
+                    {
+                        if(no.getFilhoEsqNo() != null)
+                            pai.setFilhoDirNo(no.getFilhoEsqNo());
+                        else
+                            pai.setFilhoDirNo(no.getFilhoDirNo());
+                    }
+                }
+                //se nao há subarvore à esquerda, pegue o sucessor
+                else {
+                    if(no == this.noRaiz)
+                        this.noRaiz = no.getFilhoDirNo();
+                    else
+                    {
+                        if(no.getFilhoDirNo() != null)
+                            pai.setFilhoDirNo(no.getFilhoDirNo());
+                        else
+                            pai.setFilhoDirNo(no.getFilhoEsqNo());
+                    }
+                }
+            }
+            /*caso de remocao de no com dois filhos: copie o sucessor para o no a ser removido
+            e remova o sucessor*/
+            else
+            {
+                aux = no.sucessor(no);
+                no.setValorNo(aux.getValorNo());
+                removerNoArvore(no.getFilhoDirNo(), no, aux.getValorNo());
+            }
+        }
+    }
+
+    public void removerNoArvore(int valor) {
+        //caso em que a arvore está vazia
+        if (this.getNoRaiz() == null)
+            ; 
+        //caso em que há apenas a raiz
+        else if(this.getNoRaiz().getValorNo() == valor && 
+                this.getNoRaiz().getFilhoEsqNo() == null && 
+                this.getNoRaiz().getFilhoDirNo() == null)
+        {
+            this.noRaiz = null;
+        }
+        else {
+           removerNoArvore(this.getNoRaiz(), this.getNoRaiz(), valor);
+        }
+    }
+    
 
     //Método que printa a árvore de forma identada    
     public void printArvore(No no) {

@@ -11,22 +11,23 @@ package com.mycompany.arvore_binaria;
 public class Main {
     public static void main(String[] args) {
         //Criação do Nó Raiz
-        No noRaiz = new No(8);
+        No noRaiz = new No(50);
         
         //Geração da árvore binária de busca
         Arvore arvore = new Arvore();
         
         //Inserção dos nós na árvore
         arvore.setNoRaiz(noRaiz);
-        arvore.inserirNoNaArvore(3);
-        arvore.inserirNoNaArvore(10);
-        arvore.inserirNoNaArvore(1);
-        arvore.inserirNoNaArvore(6);
-        arvore.inserirNoNaArvore(14);
-        arvore.inserirNoNaArvore(4);
-        arvore.inserirNoNaArvore(7);
-        arvore.inserirNoNaArvore(13);
-        
+        arvore.inserirNoNaArvore(30);
+        arvore.inserirNoNaArvore(40);
+        arvore.inserirNoNaArvore(48);
+        arvore.inserirNoNaArvore(35);
+        arvore.inserirNoNaArvore(65);
+        arvore.inserirNoNaArvore(75);
+
+        //arvore.removerNoArvore(35);
+        //arvore.removerNoArvore(40);
+
         //Print das informações sobre a árvore
         System.out.println("\nAltura do nó:");
         arvore.mostraAlturaNo();
