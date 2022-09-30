@@ -6,6 +6,7 @@
 package com.mycompany.arvore_binaria;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -15,6 +16,7 @@ public class Arvore {
     //Atributos da árvore binária
     private No noRaiz;
     private List<No> elementos;
+    private Boolean flag = true;
 
     //Construtor da árvore binária
     public Arvore() {
@@ -26,7 +28,7 @@ public class Arvore {
     public No getNoRaiz() {
         return noRaiz;
     }
-    
+
     //Método que seta o nó raiz da árvore
     public void setNoRaiz(No noRaiz) {
         this.noRaiz = noRaiz;
@@ -34,21 +36,39 @@ public class Arvore {
 
     //Método que gera e retorna a lista de elementos da árvore
     public List<No> geraElementos(No no) {
-        if (no.getNivelNo() == 0) {
+        if (no != null && no.getNivelNo() == 0) {
             elementos.add(no);
         }
 
         while (true) {
-            if (no.getFilhoEsqNo() != null) {
+            if (no != null && no.getFilhoEsqNo() != null) {
                 elementos.add(no.getFilhoEsqNo());
                 geraElementos(no.getFilhoEsqNo());
             }
-            if (no.getFilhoDirNo() != null) {
+            if (no != null && no.getFilhoDirNo() != null) {
                 elementos.add(no.getFilhoDirNo());
                 geraElementos(no.getFilhoDirNo());
             }
 
             break;
+        }
+
+        return this.elementos;
+    }
+
+    public List<No> geraElementos2(No no) {
+        if (flag) {
+            elementos.add(no);
+        }
+        if (no.getFilhoEsqNo() != null) {
+            flag = false;
+            elementos.add(no.getFilhoEsqNo());
+            geraElementos(no.getFilhoEsqNo());
+        }
+        if (no.getFilhoDirNo() != null) {
+            flag = false;
+            elementos.add(no.getFilhoDirNo());
+            geraElementos(no.getFilhoDirNo());
         }
 
         return this.elementos;
@@ -102,20 +122,20 @@ public class Arvore {
         }
         System.out.println();
     }
-    
+
     //Método que retorna o grau da árvore
     public int getGrauArvore() {
         elementos.clear();
         elementos = geraElementos(noRaiz);
-        
+
         int maiorGrau = 0;
-        
+
         for (No elemento : elementos) {
             if (elemento.getGrau() > maiorGrau) {
                 maiorGrau = elemento.getGrau();
             }
         }
-        
+
         return maiorGrau;
     }
 
@@ -177,7 +197,7 @@ public class Arvore {
             System.out.println("Nó " + elemento.getValorNo() + " tem profundidade " + elemento.getNivelNo());
         }
     }
-    
+
     //Método para inserir nó na árvore
     public void inserirNoNaArvore(No no, int valor) {
         if (no.getValorNo() == valor) {
@@ -205,7 +225,7 @@ public class Arvore {
 
         }
     }
-    
+
     //Método para inserir nó raiz na árvore
     public void inserirNoNaArvore(int valor) {
         if (this.getNoRaiz() == null) {
@@ -214,7 +234,7 @@ public class Arvore {
             inserirNoNaArvore(this.noRaiz, valor);
         }
     }
-    
+
     //Método para remover no da árvore
     public void removerNoArvore(No no, No pai, int valor) {
         //se o no em questao nao possui o valor a ser removido
@@ -239,51 +259,49 @@ public class Arvore {
             No aux;
             //caso de remocao de folha
             if (no.getFilhoDirNo() == null && no.getFilhoEsqNo() == null) {
-                
+
                 // se o no a ser removido for filho direito do pai
-                if(pai.getFilhoDirNo() == no)
-                {
+                if (pai.getFilhoDirNo() == no) {
                     pai.setFilhoDirNo(null);
-                }
-                else
-                {
+                } else {
                     pai.setFilhoEsqNo(null);
                 }
             }
             //caso onde o no possui 1 filho
             else if (no.getFilhoDirNo() == null || no.getFilhoEsqNo() == null) {
-                
+
                 //se nao há subarvore à direita, pegue o antecessor
                 if (no.getFilhoEsqNo() != null) {
-                    if(no == this.noRaiz)
-                    {
+                    if (no == this.noRaiz) {
                         this.noRaiz = no.getFilhoEsqNo();
-                    }
-                    else
-                    {
-                        if(no.getFilhoEsqNo() != null)
+                    } else {
+                        no.getFilhoEsqNo().setNivelNo(pai.getNivelNo() + 1);
+                        if (pai.getFilhoEsqNo() == no)
+                            pai.setFilhoEsqNo(no.getFilhoEsqNo());
+                        else if (pai.getFilhoDirNo() == no)
                             pai.setFilhoDirNo(no.getFilhoEsqNo());
-                        else
-                            pai.setFilhoDirNo(no.getFilhoDirNo());
                     }
                 }
                 //se nao há subarvore à esquerda, pegue o sucessor
                 else {
-                    if(no == this.noRaiz)
+
+                    if (no == this.noRaiz) {
                         this.noRaiz = no.getFilhoDirNo();
-                    else
-                    {
-                        if(no.getFilhoDirNo() != null)
+                    } else {
+                        no.getFilhoDirNo().setNivelNo(pai.getNivelNo() + 1);
+                        if (pai.getFilhoDirNo() == no) {
                             pai.setFilhoDirNo(no.getFilhoDirNo());
-                        else
-                            pai.setFilhoDirNo(no.getFilhoEsqNo());
+                        } else if (pai.getFilhoEsqNo() == no) {
+                            pai.setFilhoEsqNo(no.getFilhoDirNo());
+                        }
                     }
                 }
             }
             /*caso de remocao de no com dois filhos: copie o sucessor para o no a ser removido
             e remova o sucessor*/
-            else
-            {
+            else {
+//                elementos = geraElementos2(no.getFilhoEsqNo());
+//                pai.setFilhoDirNo(elementos.stream().max(Comparator.comparing(No::getValorNo)).get());
                 aux = no.sucessor(no);
                 no.setValorNo(aux.getValorNo());
                 removerNoArvore(no.getFilhoDirNo(), no, aux.getValorNo());
@@ -293,26 +311,24 @@ public class Arvore {
 
     public void removerNoArvore(int valor) {
         //caso em que a arvore está vazia
-        if (this.getNoRaiz() == null)
-            ; 
-        //caso em que há apenas a raiz
-        else if(this.getNoRaiz().getValorNo() == valor && 
-                this.getNoRaiz().getFilhoEsqNo() == null && 
-                this.getNoRaiz().getFilhoDirNo() == null)
-        {
-            this.noRaiz = null;
+        if (this.getNoRaiz() == null) {
         }
-        else {
-           removerNoArvore(this.getNoRaiz(), this.getNoRaiz(), valor);
+        //caso em que há apenas a raiz
+        else if (this.getNoRaiz().getValorNo() == valor &&
+                this.getNoRaiz().getFilhoEsqNo() == null &&
+                this.getNoRaiz().getFilhoDirNo() == null) {
+            this.noRaiz = null;
+        } else {
+            removerNoArvore(this.getNoRaiz(), this.getNoRaiz(), valor);
         }
     }
-    
+
 
     //Método que printa a árvore de forma identada    
     public void printArvore(No no) {
         String spaces = "";
 
-        while (true) {
+        while (no != null) {
 
             for (int i = 0; i < no.getNivelNo(); i++) {
                 spaces += "  ";

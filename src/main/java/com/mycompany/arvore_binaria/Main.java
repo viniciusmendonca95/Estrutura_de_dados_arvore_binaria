@@ -26,7 +26,7 @@ public class Main {
         arvore.inserirNoNaArvore(75);
 
         //arvore.removerNoArvore(35);
-        //arvore.removerNoArvore(40);
+//        arvore.removerNoArvore(40);
 
         //Print das informações sobre a árvore
         System.out.println("\nAltura do nó:");
@@ -56,7 +56,7 @@ public class Main {
         System.out.println("\nNós Internos:");
         arvore.getNoInterno();
 
-        System.out.println("\nÁrvore Genérica:");
-        arvore.printArvore(noRaiz);
+        System.out.println("\nÁrvore Binária de Busca:");
+        arvore.printArvore(arvore.getNoRaiz());
     }
 }
