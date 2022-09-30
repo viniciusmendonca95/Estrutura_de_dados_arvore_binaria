@@ -44,10 +44,10 @@ public class Main {
         arvore.getProfundidadeArvore();
 
         System.out.println("\nGrau do nó:");
-        noRaiz.getGrau();
+        arvore.getGrauNos();
         
         System.out.println("\nGrau da árvore:");
-        arvore.getGrauArvore();
+        System.out.println(arvore.getGrauArvore());
         
         System.out.println("\nElementos: ");
         arvore.getElementos();
