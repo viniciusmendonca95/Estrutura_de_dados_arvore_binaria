@@ -137,6 +137,18 @@ public class Arvore {
         return maiorGrau;
     }
 
+    //Método que retorna o grau da árvore
+    public void getGrauNos() {
+        elementos.clear();
+        elementos = geraElementos(noRaiz);
+
+
+        for (No elemento : elementos) {
+            System.out.println("Grau do nó " + elemento.getValorNo() + ": " + elemento.getGrau());
+        }
+
+    }
+
     //Método que retorna a altura da árvore
     public void getAlturaArvore() {
         elementos.clear();
@@ -199,7 +211,7 @@ public class Arvore {
     //Método para inserir nó na árvore
     public void inserirNoNaArvore(No no, int valor) {
         if (no.getValorNo() == valor) {
-            System.out.println("O no com esse valor ja existe na arvore");
+            System.out.println("\nO nó com esse valor já existe na arvore");
         } else if (no == null) {
             no.setValorNo(valor);
         } else {
