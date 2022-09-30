@@ -84,32 +84,4 @@ public class No {
             return 1;
         } 
     }
-    
-    //
-    public No sucessor(No no)
-    {
-        No sucessor = no;
-        
-        sucessor = sucessor.getFilhoDirNo();
-        
-        while(sucessor.getFilhoEsqNo() != null)
-            sucessor = sucessor.getFilhoEsqNo();
-        
-        return sucessor;
-    }
-    
-    //
-    public No antecessor(No no)
-    {
-        No antecessor = no;
-        
-        antecessor = antecessor.getFilhoEsqNo();
-        
-        while(antecessor.getFilhoDirNo() != null)
-        {
-            antecessor = antecessor.getFilhoDirNo();
-        }
-        
-        return antecessor;
-    }
 }
