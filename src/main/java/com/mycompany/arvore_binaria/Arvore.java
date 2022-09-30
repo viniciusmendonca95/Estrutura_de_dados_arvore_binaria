@@ -16,7 +16,6 @@ public class Arvore {
     //Atributos da árvore binária
     private No noRaiz;
     private List<No> elementos;
-    private Boolean flag = true;
 
     //Construtor da árvore binária
     public Arvore() {
@@ -56,19 +55,18 @@ public class Arvore {
         return this.elementos;
     }
 
-    public List<No> geraElementos2(No no) {
+    public List<No> geraElementos2(No no, Boolean flag) {
         if (flag) {
             elementos.add(no);
         }
         if (no.getFilhoEsqNo() != null) {
-            flag = false;
             elementos.add(no.getFilhoEsqNo());
-            geraElementos(no.getFilhoEsqNo());
+            geraElementos2(no.getFilhoEsqNo(), false);
         }
         if (no.getFilhoDirNo() != null) {
             flag = false;
             elementos.add(no.getFilhoDirNo());
-            geraElementos(no.getFilhoDirNo());
+            geraElementos2(no.getFilhoDirNo(), false);
         }
 
         return this.elementos;
@@ -300,11 +298,10 @@ public class Arvore {
             /*caso de remocao de no com dois filhos: copie o sucessor para o no a ser removido
             e remova o sucessor*/
             else {
-//                elementos = geraElementos2(no.getFilhoEsqNo());
-//                pai.setFilhoDirNo(elementos.stream().max(Comparator.comparing(No::getValorNo)).get());
-                aux = no.sucessor(no);
-                no.setValorNo(aux.getValorNo());
-                removerNoArvore(no.getFilhoDirNo(), no, aux.getValorNo());
+                elementos = geraElementos2(no.getFilhoEsqNo(), true);
+                No max = elementos.stream().max(Comparator.comparing(No::getValorNo)).get();
+                removerNoArvore(no, no, max.getValorNo());
+                no.setValorNo(max.getValorNo());
             }
         }
     }
